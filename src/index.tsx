@@ -1,17 +1,12 @@
-import React from 'react';
+import {getElement, LensState, setJsonForFlux} from "@focuson/state";
+import * as React from 'react'
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import {emptyGame, GameData, SimpleGame} from "./game";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+let rootElement = getElement("root");
+
+let setJson = setJsonForFlux<GameData, void>('game', (s: LensState<GameData, GameData>): void =>
+    ReactDOM.render(<SimpleGame state={s}/>, rootElement))
+
+setJson(emptyGame)
